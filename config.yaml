@@ -41,13 +41,11 @@ menu:
       weight: 4
 params:
   address:
-    address: 23 Khan Niketon, Grand Street, NYK.
-    email: hello@example.com
-    openingHours: Open from 10am to 6pm (close at 5pm Sundays)
-    phone: +(448) 833 5272 332
+    address: Regent's Park, London, UK
+    email: fmizrahi.mam2022@london.edu
+    phone: 020 7000 7000
   blogPageURL: blog
   contactLink: contact
-  copyright: All right reserved copyright © Portio 2020
   footerLogo: images/contact/widget-logo.png
   formspreeURL: YOUR FORMSPREE URL
   googleAnalytics: YOUR GOOGLE ANALYTICS CODE
@@ -58,15 +56,6 @@ params:
     longitude: '90.3746808'
     pinImage: images/pin.png
   social:
-    - icon: fa-facebook-official
-      url: https://www.facebook.com/
-      weight: 1
     - icon: fa-linkedin-square
-      url: https://www.linkedin.com/
-      weight: 2
-    - icon: fa-pinterest-square
-      url: https://www.pinterest.com/
-      weight: 3
-    - icon: fa-twitter-square
-      url: https://twitter.com/
-      weight: 4
+      url: https://www.linkedin.com/in/francois-mizrahi/
+      weight: 1
