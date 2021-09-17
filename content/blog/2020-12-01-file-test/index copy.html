@@ -1,0 +1,85 @@
+---
+title: "Test trump covid"
+author: "Francois Mizrahi"
+date: 2020-12-01T21:13:14-05:00
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+featureImage: images/allpost/allPost-7.jpg
+postImage: images/single-blog/feature-image.jpg
+---
+
+<script src="index copy_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="test-content" class="section level1">
+<h1>Test content</h1>
+<p>The purpose of this exercise is to reproduce a plot using your <code>dplyr</code> and <code>ggplot2</code> skills. Read the article <a href="https://acasignups.net/21/07/18/racial-factor-theres-77-counties-which-are-deep-blue-also-low-vaxx-guess-what-they-have">The Racial Factor: There’s 77 Counties Which Are Deep Blue But Also Low-Vaxx. Guess What They Have In Common?</a> and have a look at the attached figure.</p>
+<p>You dont have to worry about the blue-red backgound and don’t worry about replicating it exactly, try and see how far you can get. You’re encouraged to work together if you want to and exchange tips/tricks you figured out– and even though the figure in the original article is from early July 2021, you can use the most recent data.</p>
+<p>Some hints to get you started:</p>
+<ol style="list-style-type: decimal">
+<li>To get vaccination by county, we will use <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">data from the CDC</a></li>
+<li>You need to get <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a></li>
+<li>Finally, you also need an estimate of the <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">population of each county</a></li>
+</ol>
+<pre><code>## Rows: 912154 Columns: 27
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (9): Date, FIPS, Recip_County, Recip_State, SVI_CTGY, Series_Complete_P...
+## dbl (18): MMWR_week, Series_Complete_Pop_Pct, Series_Complete_Yes, Series_Co...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## Rows: 72617 Columns: 12
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (8): state, state_po, county_name, county_fips, office, candidate, party...
+## dbl (4): year, candidatevotes, totalvotes, version
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## Rows: 3273 Columns: 165
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr  (2): State, Area_Name
+## dbl (70): FIPStxt, Rural-urban_Continuum Code_2003, Rural-urban_Continuum Co...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>election_data_trump &lt;- election2020_results %&gt;%
+  filter(candidate == &quot;DONALD J TRUMP&quot;) %&gt;%
+  group_by(fips) %&gt;% 
+  summarise(total_donald_votes = sum(candidatevotes))
+
+election_data_total &lt;- election2020_results %&gt;%
+  group_by(fips) %&gt;%
+  summarise(total_votes = sum(candidatevotes))
+
+election_data_trump &lt;- left_join(election_data_trump, election_data_total, by=&quot;fips&quot;) %&gt;%
+  mutate(donald_vote_rate = (total_donald_votes/total_votes)*100)
+
+data &lt;- vaccinations %&gt;% 
+  filter(date == &quot;09/04/2021&quot;) %&gt;%
+  na.omit() %&gt;%
+  left_join(election_data_trump, by=&quot;fips&quot;) %&gt;%
+  select(fips, donald_vote_rate, series_complete_pop_pct) %&gt;%
+  na.omit()
+# We only have election data for 3154 county but we have vaccination data for 3225 county
+
+data &lt;- data %&gt;%
+  left_join(population, by=&quot;fips&quot;)
+
+ggplot(data, aes(x=donald_vote_rate, y=series_complete_pop_pct, size=pop_estimate_2019)) +
+  geom_point(size = 0.2) +
+  geom_point(alpha = 0.3) +
+  scale_size(range = c(0,15)) +
+  labs(title=&quot;Rate of donald votes to vaccination level&quot;,
+       x=&quot;2020 Trump Vote %&quot;,
+       y=&quot;% of Total Population Vaccinated&quot;) +
+  theme(legend.position = &quot;none&quot;) +
+  geom_hline(yintercept = 53.9, linetype=&quot;dotted&quot;, color=&quot;red&quot;) +
+  annotate(&quot;text&quot;, x = 5, y = 53.9, label = &quot;Target&quot;, vjust = -0.5, color=&quot;red&quot;) +
+  geom_hline(yintercept = 50.8, linetype=&quot;dotted&quot;, color=&quot;blue&quot;) +
+  annotate(&quot;text&quot;, x = 5, y = 50.8, label = &quot;Actual&quot;, vjust = 1.5, color=&quot;blue&quot;) +
+  NULL</code></pre>
+<p><img src="/blog/2020-12-01-file-test/index%20copy_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
