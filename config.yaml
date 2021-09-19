@@ -29,6 +29,7 @@ params:
     address: Regent's Park, London, UK
     email: fmizrahi.mam2022@london.edu
     phone: +33 6 98 73 40 39
+    openingHours: test
   blogPageURL: blog
   contactLink: contact
   footerLogo: images/contact/lbs_logo_05x05.png
