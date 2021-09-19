@@ -8,48 +8,27 @@ menu:
     - name: Home
       url: '#home'
       weight: 1
-    - name: About
-      url: '#about'
+    - name: All Projects
+      url: 'blog'
       weight: 2
-    - name: Service
-      url: '#service'
-      weight: 3
-    - name: Work
-      url: '#portfolio'
-      weight: 4
-    - name: Resume
-      url: '#resume'
-      weight: 5
-    - name: Blog
-      url: '#blog'
-      weight: 6
-    - name: Contact
-      url: '#contact'
-      weight: 7
   sitemap:
-    - name: About me
-      url: about
+    - name: Home
+      url: '#home'
       weight: 1
-    - name: Frequently Ask Question
-      url: '#'
+    - name: All Projects
+      url: 'blog'
       weight: 2
-    - name: Privacy & Policy
-      url: '#'
-      weight: 3
-    - name: Latest Article
-      url: '#'
-      weight: 4
 params:
   address:
     address: Regent's Park, London, UK
     email: fmizrahi.mam2022@london.edu
-    phone: 020 7000 7000
+    phone: +33 6 98 73 40 39
   blogPageURL: blog
   contactLink: contact
-  footerLogo: images/contact/widget-logo.png
+  footerLogo: images/contact/lbs_logo_05x05.png
   formspreeURL: YOUR FORMSPREE URL
   googleAnalytics: YOUR GOOGLE ANALYTICS CODE
-  logo: images/site-navigation/logo.png
+  logo: images/contact/lbs_logo_025x025.png
   map:
     APIkey: YOUR GOOGLE MAP API
     latitude: '23.7783741'
