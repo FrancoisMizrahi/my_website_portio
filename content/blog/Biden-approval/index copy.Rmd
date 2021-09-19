@@ -43,11 +43,13 @@ library(infer)
 ```
 
 
-# 3. Biden's Approval Margins
+# Biden's Approval Margins
 
-As we saw in class, fivethirtyeight.com has detailed data on [all polls that track the president's approval ](https://projects.fivethirtyeight.com/biden-approval-ratings)
+Fivethirtyeight.com has detailed data on [all polls that track the US president's approval ](https://projects.fivethirtyeight.com/biden-approval-ratings)
 
-```{r, cache=TRUE}
+Based on this data we want to are going to plot the average net approval rate (approve- disapprove) for each week since Biden got into office, along with its 95% confidence interval.
+
+```{r, cache=TRUE, include=FALSE}
 # Import approval polls data directly off fivethirtyeight website
 approval_polllist <- read_csv('https://projects.fivethirtyeight.com/biden-approval-data/approval_polllist.csv') 
 
@@ -56,19 +58,10 @@ clean_approval_polllist <- approval_polllist %>%
          week=isoweek(enddate)) 
 ```
 
-
-Based on this data we want to create
-What I would like you to do is to calculate the average net approval rate (approve- disapprove) for each week since he got into office. I want you plot the net approval, along with its 95% confidence interval. There are various dates given for each poll, please use `enddate`, i.e., the date the poll ended.
-
-Also, please add an orange line at zero. Your plot should look like this:
-
 ```{r}
 clean_approval_polllist <- clean_approval_polllist %>%
   filter(subgroup == "Adults") %>%
   mutate(daily_approval_margin = approve - disapprove)
-```
-
-```{r}
 
 weekly_avg_app_rates <- clean_approval_polllist %>%
   group_by(week) %>%
@@ -79,9 +72,6 @@ weekly_avg_app_rates <- clean_approval_polllist %>%
   mutate(lower_bound_CI_app_rate = mean_weekly_approval_margin - qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls),
          upper_bound_CI_app_rate = mean_weekly_approval_margin + qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls))
          
-```
-
-```{r}
 ggplot(weekly_avg_app_rates, aes(x=week)) +
   geom_point(aes(y=mean_weekly_approval_margin, color="red")) +
   geom_line( aes(y=mean_weekly_approval_margin, color="red")) +
@@ -102,3 +92,5 @@ ggplot(weekly_avg_app_rates, aes(x=week)) +
   ) +
   theme(legend.position = "none")
 ```
+
+> As we can see, there has been a sharpe decline in the US president approval rate.

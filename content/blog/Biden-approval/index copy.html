@@ -14,29 +14,23 @@ postImage: images/single-blog/biden.jpg
 
 
 <div id="bidens-approval-margins" class="section level1">
-<h1>3. Biden’s Approval Margins</h1>
-<p>As we saw in class, fivethirtyeight.com has detailed data on <a href="https://projects.fivethirtyeight.com/biden-approval-ratings">all polls that track the president’s approval</a></p>
-<pre class="r"><code># Import approval polls data directly off fivethirtyeight website
-approval_polllist &lt;- read_csv(&#39;https://projects.fivethirtyeight.com/biden-approval-data/approval_polllist.csv&#39;) 
-
-clean_approval_polllist &lt;- approval_polllist %&gt;%
-  mutate(enddate=mdy(enddate),
-         week=isoweek(enddate)) </code></pre>
-<p>Based on this data we want to create
-What I would like you to do is to calculate the average net approval rate (approve- disapprove) for each week since he got into office. I want you plot the net approval, along with its 95% confidence interval. There are various dates given for each poll, please use <code>enddate</code>, i.e., the date the poll ended.</p>
-<p>Also, please add an orange line at zero. Your plot should look like this:</p>
+<h1>Biden’s Approval Margins</h1>
+<p>Fivethirtyeight.com has detailed data on <a href="https://projects.fivethirtyeight.com/biden-approval-ratings">all polls that track the US president’s approval</a></p>
+<p>Based on this data we want to are going to plot the average net approval rate (approve- disapprove) for each week since Biden got into office, along with its 95% confidence interval.</p>
 <pre class="r"><code>clean_approval_polllist &lt;- clean_approval_polllist %&gt;%
   filter(subgroup == &quot;Adults&quot;) %&gt;%
-  mutate(daily_approval_margin = approve - disapprove)</code></pre>
-<pre class="r"><code>weekly_avg_app_rates &lt;- clean_approval_polllist %&gt;%
+  mutate(daily_approval_margin = approve - disapprove)
+
+weekly_avg_app_rates &lt;- clean_approval_polllist %&gt;%
   group_by(week) %&gt;%
   summarize( mean_weekly_approval_margin = mean(daily_approval_margin, na.rm = TRUE),
              number_polls = n(),
              std_weekly_approval_margin = STDEV(daily_approval_margin)) %&gt;%
 
   mutate(lower_bound_CI_app_rate = mean_weekly_approval_margin - qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls),
-         upper_bound_CI_app_rate = mean_weekly_approval_margin + qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls))</code></pre>
-<pre class="r"><code>ggplot(weekly_avg_app_rates, aes(x=week)) +
+         upper_bound_CI_app_rate = mean_weekly_approval_margin + qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls))
+         
+ggplot(weekly_avg_app_rates, aes(x=week)) +
   geom_point(aes(y=mean_weekly_approval_margin, color=&quot;red&quot;)) +
   geom_line( aes(y=mean_weekly_approval_margin, color=&quot;red&quot;)) +
   geom_ribbon(aes(ymin = lower_bound_CI_app_rate, 
@@ -55,5 +49,8 @@ What I would like you to do is to calculate the average net approval rate (appro
     y = &quot;Average Approval Margin (Approve - Disapprove)&quot;
   ) +
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/blog/Biden-approval/index%20copy_files/figure-html/unnamed-chunk-4-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/Biden-approval/index%20copy_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>As we can see, there has been a sharpe decline in the US president approval rate.</p>
+</blockquote>
 </div>

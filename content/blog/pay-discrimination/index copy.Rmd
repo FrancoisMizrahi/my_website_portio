@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r load-libraries, echo=FALSE}
+```{r load-libraries, echo=FALSE,  warning=FALSE, include=FALSE}
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)
 library(ggthemes)
@@ -42,17 +42,15 @@ library(infer)
 library(openintro)
 ```
 
-# Omega Group plc- Pay Discrimination
+# Omega Group - Pay Discrimination
 
 
 At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women. This seemed like a considerable difference, so it was decided that a further analysis of the company salaries was warranted. 
 
-We are asked to carry out the analysis. The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor. 
-
-## Loading the data
+The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor. 
 
 
-```{r load_omega_data}
+```{r load_omega_data, include=FALSE}
 omega <- read_csv(here::here("csv_data", "omega.csv"))
 glimpse(omega) # examine the data frame
 ```
@@ -94,7 +92,7 @@ gender_salary <- omega %>%
 ```
 
 
-From the analysis above, we can conclude that the difference between the relationships of salary and gender is at least 95% statistically significant. The confidence intervals of salaries of men and women do not overlap and there is an observed difference of about £10 000, leading us to an initial observation that there is gender discrimination happening. However, let us conduct further analysis to confirm this.
+From the analysis above, we can conclude that the difference between the relationships of salary and gender is at least 95% statistically significant. The confidence intervals of salaries of men and women do not overlap and there is an observed difference of about £10 000, leading us to an initial observation that there is gender discrimination happening.
 
 
 We can also run a hypothesis testing, assuming as a null hypothesis that the mean difference in salaries is zero, or that, on average, men and women make the same amount of money. We tun your hypothesis testing using `t.test()` and with the simulation method from the `infer` package.

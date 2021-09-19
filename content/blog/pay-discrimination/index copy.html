@@ -13,20 +13,10 @@ postImage: images/single-blog/pay_gap.jpg
 <script src="index copy_files/header-attrs/header-attrs.js"></script>
 
 
-<div id="omega-group-plc--pay-discrimination" class="section level1">
-<h1>Omega Group plc- Pay Discrimination</h1>
+<div id="omega-group---pay-discrimination" class="section level1">
+<h1>Omega Group - Pay Discrimination</h1>
 <p>At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women. This seemed like a considerable difference, so it was decided that a further analysis of the company salaries was warranted.</p>
-<p>We are asked to carry out the analysis. The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor.</p>
-<div id="loading-the-data" class="section level2">
-<h2>Loading the data</h2>
-<pre class="r"><code>omega &lt;- read_csv(here::here(&quot;csv_data&quot;, &quot;omega.csv&quot;))
-glimpse(omega) # examine the data frame</code></pre>
-<pre><code>## Rows: 50
-## Columns: 3
-## $ salary     &lt;dbl&gt; 81894, 69517, 68589, 74881, 65598, 76840, 78800, 70033, 635…
-## $ gender     &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;ma…
-## $ experience &lt;dbl&gt; 16, 25, 15, 33, 16, 19, 32, 34, 1, 44, 7, 14, 33, 19, 24, 3…</code></pre>
-</div>
+<p>The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor.</p>
 <div id="relationship-salary---gender" class="section level2">
 <h2>Relationship Salary - Gender ?</h2>
 <p>The data frame <code>omega</code> contains the salaries for the sample of 50 executives in the company. Can we conclude that there is a significant difference between the salaries of the male and female executives?</p>
@@ -57,7 +47,7 @@ gender_salary &lt;- omega %&gt;%
          margin_of_error = t_critical*SE_sal,
          lower_bound_CI_sal = mean_sal - (1.96*stder_sal),
          upper_bound_CI_sal = mean_sal + (1.96*stder_sal))</code></pre>
-<p>From the analysis above, we can conclude that the difference between the relationships of salary and gender is at least 95% statistically significant. The confidence intervals of salaries of men and women do not overlap and there is an observed difference of about £10 000, leading us to an initial observation that there is gender discrimination happening. However, let us conduct further analysis to confirm this.</p>
+<p>From the analysis above, we can conclude that the difference between the relationships of salary and gender is at least 95% statistically significant. The confidence intervals of salaries of men and women do not overlap and there is an observed difference of about £10 000, leading us to an initial observation that there is gender discrimination happening.</p>
 <p>We can also run a hypothesis testing, assuming as a null hypothesis that the mean difference in salaries is zero, or that, on average, men and women make the same amount of money. We tun your hypothesis testing using <code>t.test()</code> and with the simulation method from the <code>infer</code> package.</p>
 <pre class="r"><code># hypothesis testing using t.test() 
 t.test(salary ~ gender, data = omega)</code></pre>

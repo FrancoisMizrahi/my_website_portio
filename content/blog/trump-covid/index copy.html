@@ -13,14 +13,16 @@ postImage: images/single-blog/Trump.jpg
 <script src="index copy_files/header-attrs/header-attrs.js"></script>
 
 
-<p>The purpose of this exercise is to reproduce a plot using your <code>dplyr</code> and <code>ggplot2</code> skills. Read the article <a href="https://acasignups.net/21/07/18/racial-factor-theres-77-counties-which-are-deep-blue-also-low-vaxx-guess-what-they-have">The Racial Factor: There’s 77 Counties Which Are Deep Blue But Also Low-Vaxx. Guess What They Have In Common?</a> and have a look at the attached figure.</p>
-<p>You dont have to worry about the blue-red backgound and don’t worry about replicating it exactly, try and see how far you can get. You’re encouraged to work together if you want to and exchange tips/tricks you figured out– and even though the figure in the original article is from early July 2021, you can use the most recent data.</p>
-<p>Some hints to get you started:</p>
+<div id="what-is-the-relationship-between-trump-and-anti-vax" class="section level1">
+<h1>What is the relationship between Trump and anti-Vax ?</h1>
+<p>This project is based on this article: <a href="https://acasignups.net/21/07/18/racial-factor-theres-77-counties-which-are-deep-blue-also-low-vaxx-guess-what-they-have">The Racial Factor: There’s 77 Counties Which Are Deep Blue But Also Low-Vaxx. Guess What They Have In Common?</a></p>
 <ol style="list-style-type: decimal">
 <li>To get vaccination by county, we will use <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">data from the CDC</a></li>
-<li>You need to get <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a></li>
-<li>Finally, you also need an estimate of the <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">population of each county</a></li>
+<li>We will also need the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a></li>
+<li>Finally, we also need an estimate of the <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">population of each county</a></li>
 </ol>
+<div id="plot-the-relationship-between-political-views-and-anti-vax-proportion." class="section level2">
+<h2>PLot the relationship between Political views and Anti-Vax proportion.</h2>
 <pre class="r"><code>election_data_trump &lt;- election2020_results %&gt;%
   filter(candidate == &quot;DONALD J TRUMP&quot;) %&gt;%
   group_by(fips) %&gt;%
@@ -47,6 +49,7 @@ data &lt;- data %&gt;%
 ggplot(data, aes(x=donald_vote_rate, y=series_complete_pop_pct, size=pop_estimate_2019)) +
   geom_point(size = 0.2) +
   geom_point(alpha = 0.3) +
+  geom_smooth(method = lm, formula = &quot;y ~ x&quot;) +
   scale_size(range = c(0,15)) +
   labs(title=&quot;Rate of donald votes to vaccination level&quot;,
        x=&quot;2020 Trump Vote %&quot;,
@@ -58,3 +61,8 @@ ggplot(data, aes(x=donald_vote_rate, y=series_complete_pop_pct, size=pop_estimat
   annotate(&quot;text&quot;, x = 5, y = 50.8, label = &quot;Actual&quot;, vjust = 1.5, color=&quot;blue&quot;) +
   NULL</code></pre>
 <p><img src="/blog/trump-covid/index%20copy_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>As we can see there is a strong relationship between political and health views.</p>
+</blockquote>
+</div>
+</div>
