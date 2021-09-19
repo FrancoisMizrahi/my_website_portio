@@ -1,0 +1,42 @@
+---
+challenge: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.
+client: Jane Doe
+date: "2020-08-12T12:13:40+00:00"
+service: UX Design
+shortDescription: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+  nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+  voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet lorem ipsum dolor.
+solution: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua
+  vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.
+thumbnail: images/hero/Delphes_auto_x2 copy_2.jpg
+title: Portfolio Test
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
