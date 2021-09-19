@@ -1,0 +1,59 @@
+---
+title: "Biden's Approval"
+author: "Francois Mizrahi"
+date: '2020-12-01T21:13:14-05:00'
+categories: R
+tags:
+- R Markdown
+- plot
+featureImage: images/allpost/allPost-7.jpg
+postImage: images/single-blog/feature-image.jpg
+---
+
+<script src="index copy_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="bidens-approval-margins" class="section level1">
+<h1>3. Biden’s Approval Margins</h1>
+<p>As we saw in class, fivethirtyeight.com has detailed data on <a href="https://projects.fivethirtyeight.com/biden-approval-ratings">all polls that track the president’s approval</a></p>
+<pre class="r"><code># Import approval polls data directly off fivethirtyeight website
+approval_polllist &lt;- read_csv(&#39;https://projects.fivethirtyeight.com/biden-approval-data/approval_polllist.csv&#39;) 
+
+clean_approval_polllist &lt;- approval_polllist %&gt;%
+  mutate(enddate=mdy(enddate),
+         week=isoweek(enddate)) </code></pre>
+<p>Based on this data we want to create
+What I would like you to do is to calculate the average net approval rate (approve- disapprove) for each week since he got into office. I want you plot the net approval, along with its 95% confidence interval. There are various dates given for each poll, please use <code>enddate</code>, i.e., the date the poll ended.</p>
+<p>Also, please add an orange line at zero. Your plot should look like this:</p>
+<pre class="r"><code>clean_approval_polllist &lt;- clean_approval_polllist %&gt;%
+  filter(subgroup == &quot;Adults&quot;) %&gt;%
+  mutate(daily_approval_margin = approve - disapprove)</code></pre>
+<pre class="r"><code>weekly_avg_app_rates &lt;- clean_approval_polllist %&gt;%
+  group_by(week) %&gt;%
+  summarize( mean_weekly_approval_margin = mean(daily_approval_margin, na.rm = TRUE),
+             number_polls = n(),
+             std_weekly_approval_margin = STDEV(daily_approval_margin)) %&gt;%
+
+  mutate(lower_bound_CI_app_rate = mean_weekly_approval_margin - qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls),
+         upper_bound_CI_app_rate = mean_weekly_approval_margin + qt(0.975, df=number_polls-1)*std_weekly_approval_margin/sqrt(number_polls))</code></pre>
+<pre class="r"><code>ggplot(weekly_avg_app_rates, aes(x=week)) +
+  geom_point(aes(y=mean_weekly_approval_margin, color=&quot;red&quot;)) +
+  geom_line( aes(y=mean_weekly_approval_margin, color=&quot;red&quot;)) +
+  geom_ribbon(aes(ymin = lower_bound_CI_app_rate, 
+                 ymax = upper_bound_CI_app_rate), 
+                 show.legend = NA,
+                 fill = &quot;grey&quot;,
+                 colour = &quot;orange&quot;, 
+                 alpha = 0.5) +
+  geom_smooth(aes(y= mean_weekly_approval_margin), fill=NA)+
+  geom_hline(yintercept=0, color=&quot;orange&quot;, size=3)+
+  theme_bw() +
+  labs (
+    title = &quot;Estimating Approval Margin (Approve - Disapprove) for Joe Biden&quot;,
+    subtitle = &quot;Weekly average of all polls&quot;,
+    x = &quot;Week of the year&quot;,
+    y = &quot;Average Approval Margin (Approve - Disapprove)&quot;
+  ) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/blog/2020-12-01-Biden-approval/index%20copy_files/figure-html/unnamed-chunk-4-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
