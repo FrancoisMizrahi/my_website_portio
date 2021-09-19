@@ -1,7 +1,7 @@
 ---
 title: "TfL bike"
 author: "Francois Mizrahi"
-date: '2020-12-01T21:13:14-05:00'
+date: '2021-09-18T21:13:14-05:00'
 categories: R
 tags:
 - R Markdown
@@ -167,7 +167,7 @@ weekly_plot
 
 ```
 
-For both of these graphs, we to calculates the expected number of rentals per week or month between 2016-2019 and then, we see how each week/month of 2020-2021 compares to the expected rentals. Think of the calculation `excess_rentals = actual_rentals - expected_rentals`. 
+For both of these graphs, we to calculates the expected number of rentals per week or month between 2016-2019 and then, we see how each week/month of 2020-2021 compares to the expected rentals.
 
 We can see massive spikes in the previous graph, so it might be more useful to use the median rather than the mean, as extreme values won't affect it as much.
 

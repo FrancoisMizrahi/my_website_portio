@@ -1,7 +1,7 @@
 ---
 title: "Pay Discrimination"
 author: "Francois Mizrahi"
-date: '2020-12-01T21:13:14-05:00'
+date: '2021-09-19T21:13:14-05:00'
 categories: R
 tags:
 - R Markdown

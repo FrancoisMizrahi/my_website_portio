@@ -1,7 +1,7 @@
 ---
 title: "Pay Discrimination"
 author: "Francois Mizrahi"
-date: '2020-12-01T21:13:14-05:00'
+date: '2021-09-19T21:13:14-05:00'
 categories: R
 tags:
 - R Markdown
@@ -125,7 +125,7 @@ favstats (experience ~ gender, data=omega)</code></pre>
   labs (
     title = &quot;Salary by Experience&quot;
   )</code></pre>
-<p><img src="/blog/2020-12-01-pay-discrimination/index%20copy_files/figure-html/salary_exp_scatter-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/pay-discrimination/index%20copy_files/figure-html/salary_exp_scatter-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>From the scatterplot above, we can see a clear correlation between salary and experience. This would confirm the argument that salary is related to experience, and reject the argument that salary is related to gender. At this point of the analysis, we could say that there is just insufficient information to tell whether there is any gender-based salary discrimination, as it seems to be more related to experience.</p>
 </div>
 <div id="check-correlations-between-the-data" class="section level2">
@@ -135,7 +135,7 @@ favstats (experience ~ gender, data=omega)</code></pre>
   select(gender, experience, salary) %&gt;% #order variables they will appear in ggpairs()
   ggpairs(aes(colour=gender, alpha = 0.3))+
   theme_bw()</code></pre>
-<p><img src="/blog/2020-12-01-pay-discrimination/index%20copy_files/figure-html/ggpairs-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/pay-discrimination/index%20copy_files/figure-html/ggpairs-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>This salary-experience plot, organized by gender, tells us a lot. From the bottom-left of the plot, which concern employees with minimum experience, we can infer that women actually have higher salaries than men. However, as we move towards the upper-middle part of the plot, we can see that women with 15-30 years of experience are paid less than their male peers. Additionally, employees witht the most experience in the company (30-45 years), are solely male, and thus there is no way to tell whether there is any gender-based salary discrimination going on. However, it may be possible that for these senior roles, only males have been considered, as there is no woman with this much experience in this company. This would introduce another gender-based discrimination into the mix.</p>
 </div>
 </div>

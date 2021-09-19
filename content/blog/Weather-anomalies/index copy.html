@@ -1,7 +1,7 @@
 ---
 title: "Weather anomalies"
 author: "Francois Mizrahi"
-date: '2020-12-01T21:13:14-05:00'
+date: '2021-09-16T21:13:14-05:00'
 categories: R
 tags:
 - R Markdown
@@ -49,9 +49,9 @@ ggplot(tidyweather, aes(x=date, y = delta))+
   labs (
     title = &quot;Weather Anomalies&quot;
   )</code></pre>
-<p><img src="/blog/2020-12-01-Weather-anomalies/index%20copy_files/figure-html/scatter_plot-1.png" width="648" style="display: block; margin: auto;" />
+<p><img src="/blog/Weather-anomalies/index%20copy_files/figure-html/scatter_plot-1.png" width="648" style="display: block; margin: auto;" />
 We use facet_wrap to see the weather anomalies by month of the year.</p>
-<p><img src="/blog/2020-12-01-Weather-anomalies/index%20copy_files/figure-html/facet_wrap-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/Weather-anomalies/index%20copy_files/figure-html/facet_wrap-1.png" width="648" style="display: block; margin: auto;" /></p>
 <p>We remove data before 1800 and before using <code>filter</code>. Then, we use the <code>mutate</code> function to create a new variable <code>interval</code> which contains information on which period each observation belongs to.</p>
 <pre class="r"><code>comparison &lt;- tidyweather %&gt;% 
   filter(Year&gt;= 1881) %&gt;%     #remove years prior to 1881
