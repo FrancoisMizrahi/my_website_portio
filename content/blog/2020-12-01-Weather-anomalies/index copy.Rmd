@@ -6,8 +6,8 @@ categories: R
 tags:
 - R Markdown
 - plot
-featureImage: images/allpost/allPost-7.jpg
-postImage: images/single-blog/feature-image.jpg
+featureImage: images/allpost/weather.jpg
+postImage: images/single-blog/weather.jpg
 ---
 
 ```{r, setup, echo=FALSE}
