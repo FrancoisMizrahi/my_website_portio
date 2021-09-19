@@ -1,0 +1,68 @@
+---
+title: "Trump and COVID-19"
+author: "Francois Mizrahi"
+date: '2021-09-17T21:13:14-05:00'
+categories: R
+tags:
+- R Markdown
+- plot
+featureImage: images/allpost/Trump.jpg
+postImage: images/single-blog/Trump.jpg
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="what-is-the-relationship-between-trump-and-anti-vax" class="section level1">
+<h1>What is the relationship between Trump and anti-Vax ?</h1>
+<p>This project is based on this article: <a href="https://acasignups.net/21/07/18/racial-factor-theres-77-counties-which-are-deep-blue-also-low-vaxx-guess-what-they-have">The Racial Factor: There’s 77 Counties Which Are Deep Blue But Also Low-Vaxx. Guess What They Have In Common?</a></p>
+<ol style="list-style-type: decimal">
+<li>To get vaccination by county, we will use <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">data from the CDC</a></li>
+<li>We will also need the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a></li>
+<li>Finally, we also need an estimate of the <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">population of each county</a></li>
+</ol>
+<div id="plot-the-relationship-between-political-views-and-anti-vax-proportion." class="section level2">
+<h2>PLot the relationship between Political views and Anti-Vax proportion.</h2>
+<pre class="r"><code>election_data_trump &lt;- election2020_results %&gt;%
+  filter(candidate == &quot;DONALD J TRUMP&quot;) %&gt;%
+  group_by(fips) %&gt;%
+  summarise(total_donald_votes = sum(candidatevotes))
+
+election_data_total &lt;- election2020_results %&gt;%
+  group_by(fips) %&gt;%
+  summarise(total_votes = sum(candidatevotes))
+
+election_data_trump &lt;- left_join(election_data_trump, election_data_total, by=&quot;fips&quot;) %&gt;%
+  mutate(donald_vote_rate = (total_donald_votes/total_votes)*100)
+
+data &lt;- vaccinations %&gt;%
+  filter(date == &quot;09/04/2021&quot;) %&gt;%
+  na.omit() %&gt;%
+  left_join(election_data_trump, by=&quot;fips&quot;) %&gt;%
+  select(fips, donald_vote_rate, series_complete_pop_pct) %&gt;%
+  na.omit()
+# We only have election data for 3154 county but we have vaccination data for 3225 county
+
+data &lt;- data %&gt;%
+  left_join(population, by=&quot;fips&quot;)
+
+ggplot(data, aes(x=donald_vote_rate, y=series_complete_pop_pct, size=pop_estimate_2019)) +
+  geom_point(size = 0.2) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = lm, formula = &quot;y ~ x&quot;) +
+  scale_size(range = c(0,15)) +
+  labs(title=&quot;Rate of donald votes to vaccination level&quot;,
+       x=&quot;2020 Trump Vote %&quot;,
+       y=&quot;% of Total Population Vaccinated&quot;) +
+  theme(legend.position = &quot;none&quot;) +
+  geom_hline(yintercept = 53.9, linetype=&quot;dotted&quot;, color=&quot;red&quot;) +
+  annotate(&quot;text&quot;, x = 5, y = 53.9, label = &quot;Target&quot;, vjust = -0.5, color=&quot;red&quot;) +
+  geom_hline(yintercept = 50.8, linetype=&quot;dotted&quot;, color=&quot;blue&quot;) +
+  annotate(&quot;text&quot;, x = 5, y = 50.8, label = &quot;Actual&quot;, vjust = 1.5, color=&quot;blue&quot;) +
+  NULL</code></pre>
+<p><img src="/blog/trump_covid/trump_covid_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p>As we can see there is a strong relationship between political and health views.</p>
+</blockquote>
+</div>
+</div>
