@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://mywebsiteportio.netlify.app/blog/</loc>
+    <lastmod>2021-09-18T21:13:14-05:00</lastmod>
+  </url><url>
     <loc>https://mywebsiteportio.netlify.app/categories/</loc>
     <lastmod>2021-09-18T21:13:14-05:00</lastmod>
   </url><url>
@@ -17,19 +20,16 @@
     <loc>https://mywebsiteportio.netlify.app/tags/r-markdown/</loc>
     <lastmod>2021-09-18T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://mywebsiteportio.netlify.app/blog/</loc>
-    <lastmod>2021-09-18T21:13:14-05:00</lastmod>
-  </url><url>
     <loc>https://mywebsiteportio.netlify.app/tags/</loc>
     <lastmod>2021-09-18T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://mywebsiteportio.netlify.app/blog/tfl-bike/index-copy/</loc>
+    <loc>https://mywebsiteportio.netlify.app/blog/tfl_bike/tfl_bike/</loc>
     <lastmod>2021-09-18T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://mywebsiteportio.netlify.app/blog/trump-covid/index-copy/</loc>
+    <loc>https://mywebsiteportio.netlify.app/blog/trump_covid/trump_covid/</loc>
     <lastmod>2021-09-17T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>https://mywebsiteportio.netlify.app/blog/weather-anomalies/index-copy/</loc>
+    <loc>https://mywebsiteportio.netlify.app/blog/weather_anomalies/weather_anomalies/</loc>
     <lastmod>2021-09-16T21:13:14-05:00</lastmod>
   </url><url>
     <loc>https://mywebsiteportio.netlify.app/portfolio/</loc>
